@@ -11,24 +11,24 @@
 - データは **node と edge の 2 種類だけ**で持っている。
   - **node**：関数、メソッド、構造体、変数、ファイルなど。場所と行番号、シグネチャ、doc コメントも持つ。
     
-    | id     | label    | name              | file_path                                       | 行       |
-    | ------ | -------- | ----------------- | ------------------------------------------------ | ------- |
-    | 380    | File     | util.go           | pkg/api/v1/pod/util.go                           | —       |
-    | 287572 | Function | **IsPodReady**    | pkg/api/v1/pod/util.go                           | 297–299 |
-    | 251197 | Function | countHealthyPods  | pkg/controller/disruption/disruption.go          | 921–937 |
-    | 148678 | Function | addEndpointSubset | pkg/controller/endpoint/endpoints_controller.go | 646–669 |
-    | 155936 | Function | calculateStatus   | pkg/controller/replicaset/replica_set_utils.go   | 96–144  |
-    | 287575 | Function | IsPodReadyConditionTrue | pkg/api/v1/pod/util.go                     | 312–315 |
+    | id     | label    | name                    | file_path                                       | start_line | end_line |
+    | ------ | -------- | ----------------------- | ----------------------------------------------- | ---------- | -------- |
+    | 380    | File     | util.go                 | pkg/api/v1/pod/util.go                          | 0          | 0        |
+    | 287572 | Function | **IsPodReady**          | pkg/api/v1/pod/util.go                          | 297        | 299      |
+    | 251197 | Function | countHealthyPods        | pkg/controller/disruption/disruption.go         | 921        | 937      |
+    | 148678 | Function | addEndpointSubset       | pkg/controller/endpoint/endpoints_controller.go | 646        | 669      |
+    | 155936 | Function | calculateStatus         | pkg/controller/replicaset/replica_set_utils.go  | 96         | 144      |
+    | 287575 | Function | IsPodReadyConditionTrue | pkg/api/v1/pod/util.go                          | 312        | 315      |
     
   - **edge**：node 同士の関係。CALLS、IMPORTS、IMPLEMENTS、DEFINES など約 30 種類。
     
-    | source_id | target_id | type      | どこで                          |
-    | ---------- | ---------- | --------- | ---------------------------- |
-    | 380        | 287572     | DEFINES   | util.go が定義                  |
-    | 251197     | **287572** | **CALLS** | disruption.go:931            |
-    | 148678     | **287572** | **CALLS** | endpoints_controller.go:654 |
-    | 155936     | **287572** | **CALLS** | replica_set_utils.go:111   |
-    | 287572     | 287575     | CALLS     | util.go:298                  |
+    | source_id | target_id  | type      | properties（一部）                                  |
+    | --------- | ---------- | --------- | --------------------------------------------------- |
+    | 380       | 287572     | DEFINES   | `{}`                                                |
+    | 251197    | **287572** | **CALLS** | `{"callee": "apipod.IsPodReady", "line": 931}`      |
+    | 148678    | **287572** | **CALLS** | `{"callee": "podutil.IsPodReady", "line": 654}`     |
+    | 155936    | **287572** | **CALLS** | `{"callee": "podutil.IsPodReady", "line": 111}`     |
+    | 287572    | 287575     | CALLS     | `{"callee": "IsPodReadyConditionTrue", "line": 298}` |
     
 
 「`IsPodReady` を呼んでいる関数は？」は、以下のようなクエリで引ける。
