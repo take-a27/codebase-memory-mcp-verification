@@ -1,0 +1,32 @@
+[
+ {
+  "answer": 1,
+  "score": 5,
+  "comment": "API サーバーでの作成（createHandler、Store.Create、strategy、etcd3）から、キュー投入、スケジューリングサイクル（Filter・Score・assume・Reserve・Permit）、バインディングサイクル、BindingREST.Create と setPodNodeAndMetadata までを網羅しています。行番号はすべてソースと一致し、kubelet とキャッシュの確定にも触れています。"
+ },
+ {
+  "answer": 2,
+  "score": 5,
+  "comment": "K1〜K6 をすべて満たし、strategy.go、eventhandlers の各ハンドラー、PriorityQueue.Add/Pop、schedulePod 以下の関数群、DefaultBinder.Bind から BindingREST の assignPod / setPodNodeAndMetadata まで、行番号つきで正確に書いています。updatePod の分岐や kubelet の HandlePodAdditions という加点要素もあります。"
+ },
+ {
+  "answer": 3,
+  "score": 4,
+  "comment": "スケジューラー側（キュー、schedulingCycle、schedulePod、assume、bindingCycle、DefaultBinder、BindingREST）は行番号まで正確です。ただし API サーバーでの作成処理（strategy.go の PrepareForCreate など）に触れていません。また、バインド後の Update イベントでは実際には addAssignedPodToCache が呼ばれるのに、updateAssignedPodInCache と書いている軽い誤りがあります。"
+ },
+ {
+  "answer": 4,
+  "score": 5,
+  "comment": "strategy.go の PrepareForCreate / Validate から、addPod の判定条件、PriorityQueue、schedulePod 以下の Filter・Score・assume・Reserve・Permit、bindingCycle、DefaultBinder と util.BindPod、BindingREST の assignPod / setPodNodeAndMetadata までを網羅しています。行番号も正確で、kubelet にも触れています。"
+ },
+ {
+  "answer": 5,
+  "score": 5,
+  "comment": "Store.Create と strategy から、responsibleForPod / assignedPod の判定、キュー、schedulingCycle、assume、Reserve、Permit、bindingCycle、DefaultBinder、BindingREST、cache.AddPod による確定までを網羅しています。New() や flushBackoffQCompleted などの行番号もソースと一致し、誤りはありません。"
+ },
+ {
+  "answer": 6,
+  "score": 5,
+  "comment": "strategy.go から、キュー、schedulePod 以下（NewSortedScoredNodes によるノード選択、:296 の PostFilter）、assumeAndReserve、bindingCycle、DefaultBinder、BindingREST の assignPod / setPodNodeAndMetadata までを網羅し、kubelet にも触れています。addPod を「130 付近」とした小さなずれがある程度です。"
+ }
+]

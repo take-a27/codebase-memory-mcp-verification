@@ -1,0 +1,32 @@
+[
+ {
+  "answer": 1,
+  "score": 4,
+  "comment": "K1（processNextWorkItem 27 ファイル、worker）と K2（resolveControllerRef 6 か所、tombstone → resolve → enqueue、enqueue 系）を正確な行番号付きで挙げ、ControllerRefManager の内部の重複や Deployment の handleErr の違いなどのリスクにも触れています（K5 の一部）。K3（minReadySeconds の再キュー）と K4（Pod の並び替え）が抜けています。"
+ },
+ {
+  "answer": 2,
+  "score": 3,
+  "comment": "resolveControllerRef 6 か所（K2）と、Condition ヘルパーの重複（LastTransitionTime の違いも正確）は良い指摘です。ワーカーループ（K1）は軽く触れて優先度を下げただけで、tombstone 処理を『16 ファイル・25 か所』としているのは実際（31 ファイル・40 か所強）より大幅に少なく、K3 と K4 も抜けています。"
+ },
+ {
+  "answer": 3,
+  "score": 2,
+  "comment": "uidCache、printDiff、usagesToSet、getPatch、recordMetrics、isPodTerminated など、同名関数の重複はどれも正確で妥当です。ただしワーカーループ、resolveControllerRef、イベントハンドラーと enqueue、minReadySeconds の再キュー、Pod の並び替えといった正解の要点をほぼ押さえておらず、要点の一部しかありません。"
+ },
+ {
+  "answer": 4,
+  "score": 2,
+  "comment": "uidCache、printDiff、usagesToSet、slowStartBatch の違いの表、recordMetrics の errors.As の違い、replication の Condition 関数が本番で使われていない点など、正確で丁寧です。それでも K1（ワーカーループ）、K2（resolveControllerRef と enqueue）、K3、K4 という正解の要点は抜けています。"
+ },
+ {
+  "answer": 5,
+  "score": 4,
+  "comment": "tombstone 処理、processNextWorkItem 27 か所と ErrorPolicy による共通化（K1）、resolveControllerRef と addPod / updatePod / deletePod の骨格（K2）、RecheckDeletionTimestamp、expectations の違いによるリスク（K5）を押さえています。ただし RS のエラーメッセージが同じとした点は誤りで（実際は \"sync %q failed with %v\"）、handleErr の行番号もずれています。K3 と K4 は抜けています。"
+ },
+ {
+  "answer": 6,
+  "score": 3,
+  "comment": "Condition、slowStartBatch、printDiff、usagesToSet、uidCache、tombstone 処理、recordMetrics など、正確な同名重複の指摘が多いです。processNextWorkItem 27 か所（K1）には触れていますが、優先度が低いとして提案はしていません。resolveControllerRef と enqueue（K2）、K3、K4 は抜けています。"
+ }
+]

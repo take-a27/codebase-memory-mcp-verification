@@ -1,0 +1,15 @@
+ソースでの確認が終わりました。v1 版の本番コードからの呼び出しは 29 行あり、各回答の行番号とラベルをこれと照らし合わせました。
+
+- **Eviction の扱い:** `eviction.go:241` は内部型版を呼んでいます。回答 1・4・6 はこれを区別していました。回答 2・3・5 は区別していませんが、採点観点では呼び出し元として挙げるだけで K5 を満たすので、大きくは減点していません。
+- **回答 3 のみ減点:** 「上の一覧はどれも v1 版」と言い切っている点を、軽い誤りとして減点しました。
+
+```json
+[
+  {"answer": 1, "score": 4, "comment": "K1〜K6 をほぼ網羅し、eviction が内部型版であることや同名の別実装 3 つも区別できている。ただし controller_utils.go:719 は ByLogging.Less の行なのに ActivePods.Less としており、ByLogging にも触れていない。テストの例に挙げた e2e/framework/pod/wait.go:103 は kubectl の podutils 版で、v1 版の呼び出しではない。"},
+  {"answer": 2, "score": 5, "comment": "定義、controller_utils の 3 つの Less・podReadyTime・nextPodAvailabilityCheck、RS/STS/DS/Job、Endpoints、HPA、Eviction、disruption（apipod という別名）まで、関数名と行番号が正確で網羅性が高い。eviction.go が内部型版の呼び出しだとは明示していないが、K5 は満たしている。"},
+  {"answer": 3, "score": 4, "comment": "要点はすべて押さえていて、ByLogging は Ready を優先するという逆向きの並び替えも正しく説明している。ただし「上の一覧はどれも v1 版の呼び出し」と書きながら、内部型版を呼ぶ eviction.go:241 を含めているのは不正確。ワークロード系の多くで行番号を省いている。"},
+  {"answer": 4, "score": 5, "comment": "Less の各行（719/761/855）、Job・DaemonSet・StatefulSet の行、Endpoints、PDB、HPA がソースと一致している。eviction が内部型版であること、EndpointSlice の別実装（utils.go:39）、同名関数 3 つも正しく区別しており、ほぼ完全。"},
+  {"answer": 5, "score": 5, "comment": "表で本番コードの呼び出し元を網羅し、行番号も正確（719/761/855、957/964 のメトリクス、Job の 3 か所など）。DaemonSet の 948 行の説明が surge 時の置き換えとしてはやや曖昧で、eviction が内部型版であることも明示していないが、K5 は満たしており大きな誤りはない。"},
+  {"answer": 6, "score": 4, "comment": "K1〜K6 を網羅し、eviction のコメントの引用、同名関数 3 つの区別、kubelet からは呼ばれていないという指摘も正しい。ただし 719 行（ByLogging）を ActivePods 系の Less に含めており、replica_set.go:957/964 は実際にはメトリクスを出す処理なのに「削除 Pod 選定の補助判定」と誤って説明している。"}
+]
+```
