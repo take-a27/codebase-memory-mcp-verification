@@ -5,9 +5,9 @@ codebase-memory-mcp の論文では「トークンが約 10 分の 1 になる�
 
 [codebase-memory-mcp](https://github.com/DeusData/codebase-memory-mcp) は、ソースコードを事前に解析して、「どの関数がどの関数を呼んでいるか」をグラフにして持っておく MCP サーバー。Claude Code は grep の代わりに、このグラフに問い合わせられる。
 
-![codebase-memory-mcp の仕組み](images/codebase-memory-mcp.svg)
-
 ![node と edge で持ち、関係をたどって取得する図](images/graph-query.svg)
+
+![codebase-memory-mcp の仕組み](images/codebase-memory-mcp.svg)
 
 - データは **node と edge の 2 種類だけ**で持っている。
   - **node**：関数、メソッド、構造体、変数、ファイルなど。場所と行番号、シグネチャ、doc コメントも持つ。
