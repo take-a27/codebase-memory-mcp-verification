@@ -1,8 +1,9 @@
 # コードをグラフDBで検索可能にする MCP は使うべきか
+codebase-memory-mcp の論文では「トークンが約 10 分の 1 になる」、README ではそれ以上（412k → 3.4k）とされている。普段の使い方でも、本当にトークンと時間が減るのか？を検証した。
 
 ## codebase-memory-mcp とは
 
-[codebase-memory-mcp](https://github.com/DeusData/codebase-memory-mcp) は、ソースコードを事前に解析して、**「どの関数がどの関数を呼んでいるか」をグラフにして持っておく** MCP サーバー。Claude Code は grep の代わりに、このグラフに問い合わせられる。
+[codebase-memory-mcp](https://github.com/DeusData/codebase-memory-mcp) は、ソースコードを事前に解析して、「どの関数がどの関数を呼んでいるか」をグラフにして持っておく MCP サーバー。Claude Code は grep の代わりに、このグラフに問い合わせられる。
 
 ![codebase-memory-mcp の仕組み](images/codebase-memory-mcp.svg)
 
@@ -42,8 +43,7 @@ WHERE e.target_id = 287572   -- IsPodReady
 
 ## やったこと
 
-codebase-memory-mcp の論文では「トークンが約 10 分の 1 になる」、README ではそれ以上（412k → 3.4k）とされている。  
-**普段の使い方でも、本当にトークンと時間が減るのか？を検証した**
+
 
 - **対象**：Kubernetes（Go、約 535 万行）。インデックスの作成は約 1.5 分、サイズは 1.3GB。
 - **比較方法**：公式の手順どおりに MCP、スキル、hooks を入れて、６つの質問を「MCP なし」と「MCP あり」で各 3 回ずつ聞いた。モデルは Opus 5.5 で、毎回新しいセッションで実行した。また、MCP を使うように自分でも指示するかしないかで２パターンの検証を行った。
